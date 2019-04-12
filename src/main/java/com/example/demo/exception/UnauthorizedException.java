@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.exception;
 //인증이 필요한 경우, 혹은 잘못된 인증
 
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.demo.service;
+
+import com.example.demo.entity.User;
 
 public interface UserService {
 
@@ -7,8 +9,8 @@ public interface UserService {
     // 인증 & 개인정보 조회
     User authentication(String token);
     // 비밀번호 변경
-    User updatePassword(String token, String password);
+    User updatePassword(Integer userId, String newPassword);
     // 탈퇴
-    void withdraw(String token);
+    void withdraw(Integer userId);
 	
 }

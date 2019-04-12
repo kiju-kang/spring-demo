@@ -1,14 +1,18 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entity.User;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -31,21 +35,20 @@ public class UserController {
 
     // 자신의 정보를 반환
     @GetMapping(value = "/me")
-    public User getMe(@RequestHeader String authorization) {
-
-        return userService.authentication(authorization);
+    public User getMe(@RequestAttribute User user) {
+        return user;
     }
 
     // 자신의 비밀번호를 갱신한 뒤 그 결과를 반환
     @PutMapping(value = "/me")
-    public User updatePassword(@RequestHeader String authorization, @RequestParam String password) {
-        return userService.updatePassword(authorization, password);
+    public User updatePassword(@RequestAttribute User user, @RequestParam String password) {
+    	return userService.updatePassword(user.getId(), password);
     }
 
     // 탈퇴
-    @DeleteMapping
-    public void withdraw(@RequestHeader String authorization) {
-        userService.withdraw(authorization);
+    @DeleteMapping(value = "/me")
+    public void withdraw(@RequestAttribute User user) {
+    	userService.withdraw(user.getId());
     }
 	
 }
